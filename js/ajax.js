@@ -57,6 +57,11 @@ function ajaxSetActiveState(me){
 		me.closest('.second').parent().addClass('active');
 	}
 	
+	if(me.closest('.mobile_menu').length > 0){
+		$j('.mobile_menu a').parent().removeClass('active');
+		me.parent().addClass('active');
+	}
+	
 	$j('a').removeClass('current');
 	me.addClass('current');
 	
@@ -286,7 +291,7 @@ function slideInNewPage(text, direction, direction2, animationTime, callbacks, u
 			
 			newContent.css({visibility: 'visible'}).stop().animate({top: 0}, animationTime, function(){
 				initPortfolioSingleInfo();
-				$j('.blog_holder.massonary').isotope( 'reLayout');
+				$j('.blog_holder.masonry').isotope( 'reLayout');
 				$j('.content').css('min-height',$j(window).height()-$j('header').height()-$j('footer').height() + 100); // min height for content to cover side menu bar, 100 is negative margin on content
 				callCallback(callbacks,"oncomplete", null, []);
 			});
@@ -295,7 +300,7 @@ function slideInNewPage(text, direction, direction2, animationTime, callbacks, u
 			
 			newContent.css({visibility: 'visible', display:'none'}).stop().fadeIn(animationTime,function(){
 				initPortfolioSingleInfo();
-				$j('.blog_holder.massonary').isotope( 'reLayout');
+				$j('.blog_holder.masonry').isotope( 'reLayout');
 				$j('.content').css('min-height',$j(window).height()-$j('header').height()-$j('footer').height() + 100); // min height for content to cover side menu bar, 100 is negative margin on content
 				callCallback(callbacks,"oncomplete", null, []);
 			});
@@ -303,7 +308,7 @@ function slideInNewPage(text, direction, direction2, animationTime, callbacks, u
 			
 			newContent.css({visibility: 'visible', display:'none'}).stop().fadeIn(0,function(){
 				initPortfolioSingleInfo();
-				$j('.blog_holder.massonary').isotope( 'reLayout');
+				$j('.blog_holder.masonry').isotope( 'reLayout');
 				$j('.content').css('min-height',$j(window).height()-$j('header').height()-$j('footer').height() + 100); // min height for content to cover side menu bar, 100 is negative margin on content
 				callCallback(callbacks,"oncomplete", null, []);
 			});
@@ -317,7 +322,7 @@ function slideInNewPage(text, direction, direction2, animationTime, callbacks, u
 			
 			newContent.css({visibility: 'visible'}).stop().animate({left: 0}, animationTime, function(){
 				initPortfolioSingleInfo();
-				$j('.blog_holder.massonary').isotope( 'reLayout');
+				$j('.blog_holder.masonry').isotope( 'reLayout');
 				$j('.content').css('min-height',$j(window).height()-$j('header').height()-$j('footer').height() + 100); // min height for content to cover side menu bar, 100 is negative margin on content
 				callCallback(callbacks,"oncomplete", null, []);
 			});

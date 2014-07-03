@@ -44,7 +44,7 @@ class QodeLike {
 					add_post_meta($post_id, '_qode-like', $like_count, true);
 				}
 				
-				return '<i class="icon-heart icon-large"><i>'. $like_count .'</i></i>';//<span class="qode-like-count">'. $like_count .'</span>'
+				return '<i class="icon-heart icon-large"></i><span class="qode-like-count">'. $like_count .'</span>';
 				break;
 				
 			case 'update':
@@ -55,7 +55,7 @@ class QodeLike {
 				update_post_meta($post_id, '_qode-like', $like_count);
 				setcookie('qode-like_'. $post_id, $post_id, time()*20, '/');
 				
-				return '<i class="icon-heart icon-large"><i>'. $like_count .'</i></i>';//<span class="qode-like-count">'. $like_count .'</span>'
+				return '<i class="icon-heart icon-large"></i><span class="qode-like-count">'. $like_count .'</span>';
 				break;
 		}
 	}
@@ -96,7 +96,7 @@ $qode_like = new QodeLike();
 
 // get the ball rollin' 
 function qode_like() {
-	global $qode_like; 
+	global $qode_like;
 	echo $qode_like->add_qode_like(); 
 }
 

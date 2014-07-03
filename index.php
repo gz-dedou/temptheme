@@ -53,7 +53,7 @@ if(isset($qode_options_subway['blog_page_range']) && $qode_options_subway['blog_
 } else{
 	$blog_page_range = $wp_query->max_num_pages;
 }
-echo get_page_template_slug( $id );die;
+
 ?>
 			
 	<?php if(!get_post_meta($id, "qode_show-page-title", true)) { ?>

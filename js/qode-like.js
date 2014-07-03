@@ -5,7 +5,7 @@ $j(document).ready(function($){
 });
 
 function initQodeLike(){
-	$j('.qode-like').on('click', function() {
+	$j(document).on('click','.qode-like', function() {
 		
 		var $likeLink = $j(this);
 		var $id = $j(this).attr('id');

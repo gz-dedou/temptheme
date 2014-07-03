@@ -82,7 +82,7 @@ $j(document).ready(function() {
 	
 	//Qode options accordion
 	
-	if($j('.sections').length)
+	
 	$j('.sections').accordion({
 		collapsible: true,
 		active: 0
@@ -193,7 +193,7 @@ $j(document).ready(function() {
 	
 	
 	colorPicker();
-	if($j( ".datepicker" ).length)
+	
   $j( ".datepicker" ).datepicker( { dateFormat: "MM dd, yy" });
 
 	

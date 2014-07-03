@@ -13,11 +13,6 @@ if(get_post_meta($id, "qode_responsive-title-image", true) != ""){
 	$responsive_title_image = $qode_options_subway['responsive_title_image'];
 }
 
-$portfolio_qode_like = "on";
-if (isset($qode_options_subway['portfolio_qode_like'])) {
-	$portfolio_qode_like = $qode_options_subway['portfolio_qode_like'];
-}
-
 if(get_post_meta($id, "qode_fixed-title-image", true) != ""){
  $fixed_title_image = get_post_meta($id, "qode_fixed-title-image", true);
 }else{
@@ -92,18 +87,8 @@ if(get_post_meta($id, "qode_show-page-title-image", true)) {
 		?>
 		<div class="container">
 			<div class="container_inner clearfix">
-							<?php if(!is_front_page()):?>
-									<div class="custom_share_inline">
-										<?php echo do_shortcode('[social_share]'); ?>
-										</div>
-										<?php if($portfolio_qode_like == "on") { ?>
-											<div class="portfolio_like custom_like"><?php if( function_exists('qode_like') ) qode_like(); ?></div>
-										<?php } ?>
-												<div class="custom_print"></div>
-										<?php icl_post_languages_with_flag();?>
-										<hr>
-										<div class="clearfix"></div>
-							<?php endif;?>
+				
+				
 				<?php if(($sidebar == "default")||($sidebar == "")) : ?>
 					<?php if (have_posts()) : 
 							while (have_posts()) : the_post(); ?>

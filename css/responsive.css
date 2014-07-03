@@ -779,6 +779,19 @@
 		width: 48%;
 		padding: 0 4% 0 0 !important;
 	}
+
+	.footer_top .four_columns .column1 .column_inner > div,
+	.footer_top .four_columns .column2 .column_inner > div,
+	.footer_top .four_columns .column3 .column_inner > div,
+	.footer_top .four_columns .column4 .column_inner > div {
+		margin: 0 0 0 20px;
+	}
+
+	.footer_top .four_columns .column1 .column_inner,
+	.footer_top .four_columns .column2 .column_inner,
+	.footer_top .four_columns .column3 .column_inner {
+		padding-bottom: 20px;
+	}
         
         /* ==========================================================================
         Grid
@@ -898,4 +911,8 @@
 	.steps_holder .step4{
 		margin: 0px 0px 30px 0px;
 	}
+}
+@media only screen and (max-width: 350px) {
+
+	.section_inner_margin { margin: 0; }
 }

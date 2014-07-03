@@ -78,6 +78,8 @@ $j(window).load(function(){
 	initBlog();
 	setFooterHeight();
 	
+	$j('.side_menu').css({'visibility':'visible','right':'0px'});
+	
 	if($j('.centered_logo').length){
 		$j('.content').css('margin-top',header_height+logo_height+20+$j('.header_top').height()-2); //20 is top/bottom margin of logo wrapper, 2 is because of the display: inline-block
 	}
@@ -192,13 +194,10 @@ function initSideMenu(){
 		if(!$j(this).hasClass('opened')){
 			$j(this).addClass('opened');
 			$j('body').addClass('right_side_menu_opened');
-			var side_position = jQuery('body').hasClass('rtl')?"right":"left";
-			$j('.side_menu').css({'visibility':'visible'}).css(side_position,'0px');
+
 		}else{
 			$j(this).removeClass('opened');
 			$j('body').removeClass('right_side_menu_opened');
-			var side_position = jQuery('body').hasClass('rtl')?"right":"left";
-			$j('.side_menu').css({'visibility':'hidden'}).css(side_position,'initial');
 		}
 	});
 }
@@ -220,15 +219,8 @@ function setDropDownMenuPosition(){
 		}
 		
 		if(menu_item_from_left < sub_menu_width || sub_menu_from_left < sub_menu_width){
-			if(jQuery('body').hasClass('rtl')){
-				$j(menu_items[i]).find('.second').addClass('left');
-			}else{
-				$j(menu_items[i]).find('.second').addClass('right');
-				$j(menu_items[i]).find('.second .inner ul').addClass('right');
-			}
-		}
-		if(jQuery('body').hasClass('rtl')){
-			$j(menu_items[i]).find('.second .inner ul').addClass('left');
+			$j(menu_items[i]).find('.second').addClass('right');
+			$j(menu_items[i]).find('.second .inner ul').addClass('right');
 		}
 	});
 }
@@ -241,10 +233,7 @@ function initDropDownMenu(){
 	menu_items.each( function(i) {
 		if ($j(menu_items[i]).find('.second').length > 0) {
 			if($j(menu_items[i]).hasClass('wide')){
-//				if(jQuery('body').hasClass('rtl'))
-//				$j(this).find('.second').css('right',0);
-//			else	
-//				$j(this).find('.second').css('left',0);
+				$j(this).find('.second').css('left',0);
 				
 				var tallest = 0;
 				$j(this).find('.second > .inner > ul > li').each(function() {
@@ -262,14 +251,11 @@ function initDropDownMenu(){
 					row_number = $j(this).find('.second > .inner > ul > li').length;
 				} 
 				
-				var width = row_number*($j(this).find('.second > .inner > ul > li').width()) + row_number+4; // + row_number is for left borders
+				var width = row_number*($j(this).find('.second > .inner > ul > li').width()) + row_number; // + row_number is for left borders
 				$j(this).find('.second > .inner > ul').width(width);
 				var left_position = $j(this).find('.second').offset().left;
-				if(jQuery('body').hasClass('rtl')){
-					left_position = $j(window).width() - (left_position + width) -30;
-					$j(this).find('.second').css({'right':-left_position,'width':$j(window).width()});
-				}else	
-					$j(this).find('.second').css({'left':-left_position,'width':$j(window).width()});
+
+				$j(this).find('.second').css({'left':-left_position,'width':$j(window).width()});
 			}
 			
 			if(!menu_dropdown_height_set){
@@ -632,7 +618,7 @@ function initParallaxTitle(){
 		title.css({ 'opacity' : (1 - $scroll/($j('.title').height()*0.6)) });
 		
 		$j(window).on('scroll', function() {
-			title.css({ 'opacity' : (1 - ($scroll-170)/($j('.title').height()*0.6)) });
+			title.css({ 'opacity' : (1 - $scroll/($j('.title').height()*0.6)) });
 			
 			if($j('.title.has_fixed_background').length){ 
 				var title_distance = $scroll - $j('.title.has_fixed_background').offset().top;
@@ -1103,10 +1089,7 @@ function addPlaceholderSearchWidget(){
 	$j('.widget.widget_search form input:text').each(
 		function(i,el) {
 		if (!el.value || el.value === '') {
-			if(jQuery('body').hasClass('rtl'))
-				el.placeholder = 'جستجو...';
-			else
-				el.placeholder = 'SEARCH HERE';
+			el.placeholder = 'SEARCH HERE';
 		}
 	});
 }
@@ -1423,7 +1406,7 @@ function initHashClick(){
 
 function anchorActiveState(me){
 	if(me.closest('.main_menu').length > 0){
-		$j('a').parent().removeClass('active');
+		$j('.main_menu a').parent().removeClass('active');
 	}
 	
 	if(me.closest('.second').length === 0){
@@ -1432,7 +1415,12 @@ function anchorActiveState(me){
 		me.closest('.second').parent().addClass('active');
 	}
 	
-	$j('a').removeClass('current');
+	if(me.closest('.mobile_menu').length > 0){
+		$j('.mobile_menu a').parent().removeClass('active');
+		me.parent().addClass('active');
+	}
+	
+	$j('.mobile_menu a, .main_menu a').removeClass('current');
 	me.addClass('current');
 }
 

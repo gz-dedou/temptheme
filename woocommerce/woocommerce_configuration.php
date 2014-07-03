@@ -1,9 +1,31 @@
 <?php
 
-// Redefine woocommerce_output_related_products()
-function woocommerce_output_related_products() {
-    woocommerce_related_products(4, 4); // Display 4 products in rows of 4
+//Disable the default WooCommerce stylesheet.
+if ( version_compare( WOOCOMMERCE_VERSION, "2.1" ) >= 0 ) {
+    add_filter( 'woocommerce_enqueue_styles', '__return_false' );
+} else {
+    define( 'WOOCOMMERCE_USE_CSS', false );
 }
+
+/**
+ * WooCommerce Extra Feature
+ * --------------------------
+ *
+ * Change number of related products on product page
+ * Set your own value for 'posts_per_page'
+ *
+ */ 
+function woo_related_products_limit() {
+  global $product;
+    
+    $args = array(
+        'post_type'             => 'product',
+        'no_found_rows'         => 1,
+        'posts_per_page'        => 4
+    );
+    return $args;
+}
+add_filter( 'woocommerce_related_products_args', 'woo_related_products_limit' );
 
 // Redefine woocommerce_output_upsell_products()
 function woocommerce_upsell_display($posts_per_page = 4, $columns = 4, $orderby = 'rand') {
@@ -29,20 +51,20 @@ add_filter('woocommerce_checkout_fields', 'custom_override_checkout_fields');
 function custom_override_checkout_fields($fields) {
     //billing fields
     $args_billing = array(
-        'first_name' => 'First name',
-        'last_name'  => 'Last name',
-        'company'    => 'Company name',
-        'address_1'  => 'Address',
-        'email'      => 'Email',
-        'phone'      => 'Phone'
+        'first_name' => __('First name','qode'),
+        'last_name'  => __('Last name','qode'),
+        'company'    => __('Company name','qode'),
+        'address_1'  => __('Address','qode'),
+        'email'      => __('Email','qode'),
+        'phone'      => __('Phone','qode')
     );
     
     //shipping fields
     $args_shipping = array(
-        'first_name' => 'First name',
-        'last_name'  => 'Last name',
-        'company'    => 'Company name',
-        'address_1'  => 'Address'
+        'first_name' => __('First name','qode'),
+        'last_name'  => __('Last name','qode'),
+        'company'    => __('Company name','qode'),
+        'address_1'  => __('Address','qode')
     );
     
     //override billing placeholder values

@@ -553,9 +553,6 @@ z-index: 100;
 .wp_themeSkin div{
 	position: relative;
 }
-#TB_window { 
-	z-index: 10000!important;
-}
 
 #qode_shortodes_popup ul {
 	margin: 0px;
@@ -735,4 +732,7 @@ table.form-table tr.bottom_border{
 #wp-wpb_tinymce_content-editor-container #qode_shortcodes_menu_holder{
 	    left: 80px !important;
 		top: 0!important;
+}
+#TB_window{
+	z-index: 100050 !important;
 }

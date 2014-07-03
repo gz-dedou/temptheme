@@ -36,7 +36,7 @@ function qode_custom_breadcrumbs() {
 			if ( is_category() ) {
 			  $thisCat = get_category(get_query_var('cat'), false);
 			  if ($thisCat->parent != 0) echo get_category_parents($thisCat->parent, TRUE, ' ' . $delimiter);
-			  echo $before . single_cat_title('', false) . $after; 
+			  echo $before . single_cat_title('', false) . $after;
 
 			} elseif ( is_search() ) {
 			  echo $before . __('Search results for','qode') . ' "' . get_search_query() . '"' . $after;
@@ -54,36 +54,11 @@ function qode_custom_breadcrumbs() {
 			  echo $before . get_the_time('Y') . $after;
 
 			} elseif ( is_single() && !is_attachment() ) {
-			  if ( get_post_type() != 'post' ) {  
+			  if ( get_post_type() != 'post' ) {
 				$post_type = get_post_type_object(get_post_type());
 				$slug = $post_type->rewrite;
-				$tax = get_the_taxonomies();
-				
-				if($tax){
-					the_category($delimiter,'multiple'); echo $delimiter;
-					//the_taxonomies(array('sep'=>' - ','after'=>$delimiter,'template' => '<span class="hide_this">%s:</span> %l')); 
-				}
-				// if single get ebooks page and place it to bread crumb
-				if ( get_post_type() == 'ebooks' ) {
-					$page = get_pages(array(
-							'meta_key' => '_wp_page_template',
-							'meta_value' => 'ebooks_blog.php'
-					));
-					if($page && is_array($page))
-						$page = $page[0];
-					
-					echo '<a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'">'.$page->post_title.'</a>' . $delimiter;
-				
-				}elseif($post->post_type == "meetings" && $post->post_parent){
-					$parent_id  = $post->post_parent;
-					$page = get_page($parent_id);
-					echo '<a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a>'.$delimiter;
-
-				}	
-				
-				
 				if ($showCurrent == 1) echo $before . get_the_title() . $after;
-			  } else { 
+			  } else {
 				$cat = get_the_category(); $cat = $cat[0];
 				$cats = get_category_parents($cat, TRUE, ' ' . $delimiter);
 				if ($showCurrent == 0) $cats = preg_replace("#^(.+)\s$delimiter\s$#", "$1", $cats);
@@ -100,11 +75,8 @@ function qode_custom_breadcrumbs() {
 
 			} elseif ( is_attachment() ) {
 			  $parent = get_post($post->post_parent);
-			  $cat = get_the_category($parent->ID);
-			  if($cat){
-			 	 $cat = $cat[0];
-			  	echo get_category_parents($cat, TRUE, ' ' . $delimiter);
-			  }
+			  $cat = get_the_category($parent->ID); $cat = $cat[0];
+			  echo get_category_parents($cat, TRUE, ' ' . $delimiter);
 			  echo '<a href="' . get_permalink($parent) . '">' . $parent->post_title . '</a>';
 			  if ($showCurrent == 1) echo $delimiter . $before . get_the_title() . $after;
 
@@ -126,7 +98,7 @@ function qode_custom_breadcrumbs() {
 			  }
 			  if ($showCurrent == 1) echo $delimiter . $before . get_the_title() . $after;
 
-			}elseif ( is_tag() ) {
+			} elseif ( is_tag() ) {
 			  echo $before . __('Posts tagged','qode') . ' "' . single_tag_title('', false) . '"' . $after;
 
 			} elseif ( is_author() ) {

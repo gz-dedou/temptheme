@@ -84,7 +84,6 @@ if ($disable_qode_seo != "yes") {
 	<?php if (isset($qode_options_subway['google_analytics_code'])){
 				if($qode_options_subway['google_analytics_code'] != "") { 
 	?>
-	
 		<script>
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', '<?php echo $qode_options_subway['google_analytics_code']; ?>']);

@@ -370,13 +370,13 @@ function latest_post($atts, $content = null) {
 			} 
 
 			if($text_length > 0){
-				$html .= '"><div class="latest_post"><a href="'.get_permalink().'">'.get_the_post_thumbnail(get_the_id(),'full').'</a><div class="latest_post_text"><div class="latest_post_inner"><span class="latest_date"><span class="date">'.get_post_time('d').'</span><span class="month">'.get_post_time('M').'</span></span><h4><a href="'.get_permalink().'">'.get_the_title().'</a></h4><span class="latest_category">In';
+				$html .= '"><div class="latest_post"><a href="'.get_permalink().'">'.get_the_post_thumbnail(get_the_id(),'full').'</a><div class="latest_post_text"><div class="latest_post_inner"><span class="latest_date"><span class="date">'.get_post_time('d').'</span><span class="month">'.get_post_time('M', true, get_the_ID(), true).'</span></span><h4><a href="'.get_permalink().'">'.get_the_title().'</a></h4><span class="latest_category">'. __('In','qode');
 				foreach($cat as $categ) {
 					$html .=' <a href="'.get_category_link($categ->term_id).'">'.$categ->cat_name.'</a> ';
 				}
 				$html .='</span></div><p>'.substr(get_the_excerpt(), 0, intval($text_length)).'...</p></div></div></li>';
 			} else {
-				$html .= '"><div class="latest_post"><a href="'.get_permalink().'">'.get_the_post_thumbnail(get_the_id(),'full').'</a><div class="latest_post_text"><div class="latest_post_inner"><span class="latest_date"><span class="date">'.get_post_time('d').'</span><span class="month">'.get_post_time('M').'</span></span><h4><a href="'.get_permalink().'">'.get_the_title().'</a></h4><span class="latest_category">In';
+				$html .= '"><div class="latest_post"><a href="'.get_permalink().'">'.get_the_post_thumbnail(get_the_id(),'full').'</a><div class="latest_post_text"><div class="latest_post_inner"><span class="latest_date"><span class="date">'.get_post_time('d').'</span><span class="month">'.get_post_time('M', true, get_the_ID(), true).'</span></span><h4><a href="'.get_permalink().'">'.get_the_title().'</a></h4><span class="latest_category">'. __('In','qode');
 				foreach($cat as $categ) {
 					$html .=' <a href="'.get_category_link($categ->term_id).'">'.$categ->cat_name.'</a> ';
 				}
@@ -1081,7 +1081,7 @@ function social_share($atts, $content = null) {
 				$html .= '<div class="page_share">';
 			}
 				$html .= '<span class="social_share_holder">';
-				$html .= '<span class="social_share_icon"></span>';//'.  __('Share','qode') .'
+				$html .= '<span class="social_share_icon">'.  __('Share','qode') .'</span>';
 					$html .= '<div class="social_share_dropdown"><ul>';
 					if(isset($qode_options_subway['enable_facebook_share']) &&  $qode_options_subway['enable_facebook_share'] == "yes") { 
 						$html .= '<li class="facebook_share">';
@@ -1277,7 +1277,7 @@ function cover_boxes($atts, $content = null) {
 	}
 	$html .= "<div class='box_content'><h3 ".$color1.">".$title1."</h3>";
 	$html .= "<p>".$text1."</p>";
-	$html .= "<a class='hamrah_btn qbutton normal' href='".$link1."' target='".$target1."'>".$link_label1."</a>";
+	$html .= "<a class='qbutton no_fill' href='".$link1."' target='".$target1."'>".$link_label1."</a>";
 	$html .= "</div></div>";
 	$html .= "</li>";
 	
@@ -1296,7 +1296,7 @@ function cover_boxes($atts, $content = null) {
 	}
 	$html .= "<div class='box_content'><h3 ".$color2.">".$title2."</h3>";
 	$html .= "<p>".$text2."</p>";
-	$html .= "<a class='hamrah_btn qbutton normal' href='".$link2."' target='".$target2."'>".$link_label2."</a>";
+	$html .= "<a class='qbutton no_fill' href='".$link2."' target='".$target2."'>".$link_label2."</a>";
 	$html .= "</div></div>";
 	$html .= "</li>";
 	
@@ -1315,7 +1315,7 @@ function cover_boxes($atts, $content = null) {
 	}
 	$html .= "<div class='box_content'><h3 ".$color3.">".$title3."</h3>";
 	$html .= "<p>".$text3."</p>";
-	$html .= "<a class='hamrah_btn qbutton normal' href='".$link3."' target='".$target3."'>".$link_label3."</a>";
+	$html .= "<a class='qbutton no_fill' href='".$link3."' target='".$target3."'>".$link_label3."</a>";
 	$html .= "</div></div>";
 	$html .= "</li>";
 	
@@ -1792,379 +1792,3 @@ function steps($atts, $content = null) {
 }
 }
 add_shortcode('steps', 'steps');
-
-
-//****************** ADDED BY WEBRUN ************************//
-
-/* Image with text and icon shortcode */
-
-if (!function_exists('image_with_text_and_no_icon')) {
-	function image_with_text_and_no_icon($atts, $content = null) {
-		extract(shortcode_atts(array("image" =>"","gallery"=>0,"g_link"=>"","a_link"=>"" ,"b_link"=>"" ,"target"=>"", "title"=>"", "title_color"=>""), $atts));
-		$html = '';
-		$html .= '<div class="box_image_with_border no_icon_box_cont '.(isset($gallery) && $gallery == 1?'gallery':'').'"><div class="box_image_holder '.(isset($gallery) && $gallery == 1?'gallery':'').' no_icon_box">';
-		if($a_link != "" || $g_link != ""){
-			$html .= '<a href="'.($g_link!=""?$g_link:$a_link).'" target="'.$target.'">';
-		}
-		$html .= '<span class="box_image_shadow"></span><span class="image_holder_inner">';
-		if(is_numeric($image)) {
-			//$image_src = wp_get_attachment_url( $image );
-			$imag = wp_get_attachment_image_src($image,($gallery?'full':'medium'));
-			$image_src = $imag[0];
-		}else {
-			$image_src = $image;
-		}
-		$html .= '<img src="'.$image_src.'" alt="'.$title.'" />';
-		$html .= '</span>';
-		if($a_link != ""){
-			$html .= '</a>';
-		}
-		$html .= '</div>';
-		$html .= '<h3 ';
-		if($title_color != ""){
-			$html .= 'style="color:'.$title_color.';"';
-		}
-		$html .= '>'.$title.'</h3>';
-		if(isset($gallery) && $gallery == 1){}
-		else
-			$html .= '<div class="has_min_height">'.$content.'</div>';
-		$links = '';
-		if($g_link !="")
-			$links .= "[button size='medium' type='normal' border_color='#9786bc' color='' background_color='#6c6087' font_style='' text='".__('View Gallery','qode')."' link='$g_link' target='_self']";
-		if($a_link !="")
-			$links .= "[button size='medium' type='normal' border_color='#9786bc' color='' background_color='#6c6087' font_style='' text='".__('Read Article','qode')."' link='$a_link' target='_self']";
-		if($b_link !="")
-			$links .= "[button size='medium' type='normal' border_color='#9786bc' color='' background_color='#6c6087' font_style='' text='".__('View Ebook','qode')."' link='$b_link' target='_self']";
-		$html .= do_shortcode($links);
-		if(isset($gallery) && $gallery == 1){}
-		else
-		$html .= '<span class="separator transparent" style="margin: 12px 0;"></span>';
-		$html .=	'</div>';
-		return $html;
-	}
-}
-add_shortcode('image_with_text_and_no_icon', 'image_with_text_and_no_icon');
-
-
-if (!function_exists('hamrah_farsi_meetings_tabs')) {
-	function hamrah_farsi_meetings_tabs($atts, $content = null) {
-		extract(shortcode_atts(array("interval" =>0), $atts));
-		
-// 		$custom_terms = get_terms('fellowships');
-// 		$tax_q = array();
-// 		foreach ($custom_terms as $ct){		
-// 			$tax_q[] = $ct->slug;
-// 		}
-
-		$args = array(
-					'posts_per_page'=>-1,
-					'orderby'=>'date',
-					'order'	=> 'ASC',
-					'post_type' => 'hamrah_gallery'
-			);
-		$the_query = new WP_Query( $args );
-
-		$html = '';
-		// The Loop
-		if ( $the_query->have_posts() ) {
-
-		
-		$html = '[vc_tabs interval="'.$interval.'" style="vertical"]';
-		$position = true;
-		if(ICL_LANGUAGE_CODE=='fa'){
-			$position = false;
-		}
-		while( $the_query->have_posts() ) { $the_query->the_post(); 
-			$g_id = icl_object_id(get_option('gallery_page_hamrah'), 'page', false,ICL_LANGUAGE_CODE);
-			$html .= '[vc_tab title="'.get_the_title().'" tab_id="id_'.get_the_ID().'"]';
-					$p_link = get_permalink(get_the_ID());		
-					$html .=	'[image_with_text_and_no_icon target="_self" gallery="1" image="'.get_post_thumbnail_id(get_the_ID(),'full').'" g_link="'.get_permalink($g_id).'#post-'.get_the_ID().'" title="'.get_the_title().'"]'.
-									get_the_excerpt().'<p><a href="'.$p_link.'" title="'.__('View Gallery','qode').'">'.__('View Gallery','qode').'</a></p>'.
-								'[/image_with_text_and_no_icon]';
-				$html .= '[/vc_tab]';		}
-		$html .='[/vc_tabs]';
-		}
-
-		$html = do_shortcode($html);
-		$html .= '<span class="separator transparent" style="margin: 12px 0;"></span>';
-
-		return $html;
-
-	}
-}
-add_shortcode('hamrah_farsi_meetings_tabs', 'hamrah_farsi_meetings_tabs');
-
-
-if (!function_exists('hamrah_farsi_meetings_side_slides')) {
-	function hamrah_farsi_meetings_side_slides($atts) {
-		extract(shortcode_atts(array("flex_slide_title"=>"","flex_slide_content"=>""), $atts));
-	wp_register_style( 'flex_css', get_stylesheet_directory_uri() . '/js/lib/woothemes-FlexSlider-'.(ICL_LANGUAGE_CODE=='fa'?'4c7e00b':'ca347d4').'/flexslider.css'  );
-	wp_enqueue_style( 'flex_css' );
-	wp_register_script('flex_js',get_stylesheet_directory_uri() . '/js/lib/woothemes-FlexSlider-'.(ICL_LANGUAGE_CODE=='fa'?'4c7e00b':'ca347d4').'/jquery.flexslider.js',array('jquery'),'2.0.3',true);
-	wp_enqueue_script('flex_js'); // Enqueue it!
-	wp_register_script('flex_control_js',get_stylesheet_directory_uri() . '/js/lib/flex_'.(ICL_LANGUAGE_CODE=='fa'?'rtl':'ltr').'.js',array('jquery','flex_js'),'2.0.3',true);
-	wp_enqueue_script('flex_control_js');
-
-		$html ='[vc_row]'.
-				'[vc_column width="1/4"]'.
-				'[custom_font font_family="'.(ICL_LANGUAGE_CODE == 'fa'?'Arial':'Oswald').'" font_size="20" line_height="26" font_style="normal" text_align="center" font_weight="300" text_decoration="none" padding="0px" margin="20px"]'.$flex_slide_title.'[/custom_font]'.
-				'<p>'.$flex_slide_content.'</p>'.
-				'<div class="portfolio_navigation farsi_fellow_nav">'.
-				'<div id="flexslider_farsi_meetings_prev" class="portfolio_prev"><a><i class="icon-angle-left"></i>'.__('Previous','qode').'</a></div>'.
-				'<div id="flexslider_farsi_meetings_next" class="portfolio_next"><a>'.__('Next','qode').'<i class="icon-angle-right"></i></a></div>'.
-				'</div>'.
-
-				'[/vc_column]'.
-				'[vc_column width="3/4"]';
-		
-		
-	//removed at 3 of january	
-// 		$custom_terms = get_terms('fellowships');
-// 		$tax_q = array();
-// 		foreach ($custom_terms as $ct){
-// 			$tax_q[] = $ct->slug;
-// 		}
-
-// 		$args = array(
-// 				'posts_per_page'=>-1,
-// 				'orderby'=>'date',
-// 				'order'	=> 'ASC',
-// 				'post_type' => 'meetings',
-// 				'tax_query' => array(
-// 						array(
-// 								'taxonomy'  => 'fellowships',
-// 								'field'		=> 'slug',
-// 								'terms'		=> $tax_q
-// 						)
-// 				)
-// 		);
-
-		$args = array(
-			'posts_per_page' => -1,
-			'orderby'=>'date',
-			'order'=>'ASC',
-			'post_type'=>'meetings'
-		);
-		$the_query = new WP_Query( $args );
-
-		$html .= '<div class="flexslider widget_recent_works-container clearfix" id="flexslider_farsi_fellowship" style="opacity: 1;">'.
-					
-				'<ul class="flex_slides" style="width: 2000%; -webkit-transition: 0s; transition: 0s; -webkit-transform: translate3d(0px, 0, 0);">';
-
-		// The Loop
-		if ( $the_query->have_posts() ) {
-			while( $the_query->have_posts() ) { $the_query->the_post();
-			//added to remove farsi meeting from list
-			if(!get_post_ancestors(get_the_ID()))
-				continue;
-			$p_link = get_permalink(get_the_ID());
-			$featured_image_array = wp_get_attachment_image_src( get_post_thumbnail_id(get_the_ID()), 'single-post-thumbnail' ); //original size
-			$large_image = $featured_image_array[0];
-			$title = get_the_title(get_the_ID());
-			$html .= '<li style="width: 276px; float: left; display: block;">';
-			$html .= "<div class='projects_holder clearfix v3 hover_text with_mask farsi_fellow_ship'><article class='flex_slider_image_artic'><div class='image_holder'>";
-			$html .= "<span class='image'>";
-			$html .= get_the_post_thumbnail(get_the_ID(),'small');
-			$html .= "</span>";
-			$html .= "<span class='text_holder'>";
-			$html .= "<span class='text_outer'>";
-			$html .= "<span class='text_inner'><span class='feature_holder'>";
-			$html .= '<h4><a href="'. $p_link . '">'.$title.'</a></h4>';
-			$html .= "<a class='lightbox' title='" . $title . "' href='" .$large_image . "' data-rel='prettyPhoto[]'><i class='icon-search icon-2x'></i>".__('Zoom','qode')."</a>";
-			$html .= "<a class='preview' href='". $p_link ."'><i class='icon-link icon-2x'></i>".__('View','qode')."</a>";
-			$html .= "</span></span>";
-			$html .= "</span>";
-			$html .= "</span>";
-			$html .= "</div></article></div>";
-
-
-			$html .= '</li>';
-			}
-
-		}
-		$html .=	'</ul></div>[/vc_column]';
-
-
-		$html .= '[/vc_row]';
-
-		$html = do_shortcode($html);
-		return $html;
-	}
-}
-add_shortcode('hamrah_farsi_meetings_side_slide', 'hamrah_farsi_meetings_side_slides');
-
-
-if (!function_exists('hamrah_gallery_section')) {
-	function hamrah_gallery_section($atts, $content = null) {
-		extract(shortcode_atts(array("interval" =>0), $atts));
-
-		$args = array(
-				'posts_per_page'=>3,
-				'orderby'=>'date',
-				'order'	=> 'DESC',
-				'post_type' => 'hamrah_gallery',
-				'suppress_filters' => false 
-		);
-		$the_query = new WP_Query( $args );
-
-		$html = '';
-		// The Loop
-		if ( $the_query->have_posts() ) {
-
-			$html = '[vc_row]';
-			$position = true;
-				while( $the_query->have_posts() ) { $the_query->the_post();
-				
-						$html .= '[vc_column width="1/3"]'.
-									'[custom_font font_family="Oswald" font_size="20" line_height="26" font_style="normal" text_align="center" font_weight="300" text_decoration="none" padding="0px" margin="20px"]'.get_the_title(get_the_ID()).'[/custom_font]'.
-									'<div class="circle_big"><a href="'.get_permalink(get_the_ID()).'" alt="'.get_the_title(get_the_ID()).'"><div class="image_holder">'.get_the_post_thumbnail(get_the_ID(),'full').'</div></a></div>'.
-								 '[/vc_column]';
-				}
-
-		}
-		$html .='[/vc_row]';
-
-		$html = do_shortcode($html);
-		$html .= '<span class="separator transparent" style="margin: 12px 0;"></span>';
-
-		return $html;
-
-	}
-}
-add_shortcode('hamrah_gallery_section', 'hamrah_gallery_section');
-
-if (!function_exists('left_right_content_with_image')) {
-	function left_right_content_with_image($atts, $content = null) {
-		extract(shortcode_atts(array("interval" =>0,'image_url'=>'','short_form'=>'','title'=>'','direction'=>'0','text'=>''), $atts));
-
-		$html = '<div class="wpb_row vc_row-fluid category_design">
-						<section class="section  grid_section section_category">
-							<div class="vc_span12 clearfix">';
-		if($image_url)
-			$link = wp_get_attachment_image_src($image_url,'medium');
-		$img = '<div class="vc_span3 wpb_column column_container">
-						<div class="wpb_wrapper">
-							<div class="wpb_single_image wpb_content_element wpb_animate_when_almost_visible wpb_left-to-right wpb_start_animation">
-								<div class="wpb_wrapper cat_count_cont">
-									<img src="'.( $link?$link[0]:get_stylesheet_directory_uri().'/img/default_cat_logo_'.ICL_LANGUAGE_CODE.'.png').'">
-									<span class="cat_item_counter">'. $short_form .'</span>
-								</div>
-							</div>
-						</div>
-					</div>';
-		$desc = '<div class="vc_span9 wpb_column column_container">
-					<div class="wpb_wrapper">
-						<div class="wpb_text_column wpb_content_element hamrah_right_left_shortcode">
-							<div class="wpb_wrapper">
-								<h3>'.$title.'</h3>
-								<p>&nbsp;</p>';
-			
-		$close_content =	  '</div>
-							</div>
-						</div>
-					</div>';
-		
-		if($direction == '1'){
-			$html .= $desc;
-			$html .= $content?$content:$text;
-			$html .= $close_content;
-			$html .= $img;
-		}else{
-			$html .= $img;
-			$html .= $desc;
-			$html .= $content?$content:$text;
-			$html .= $close_content;
-		}
-		
-		
-		$html .='		</div>
-					</section>
-				</div>';
-		return $html;
-
-	}
-}
-add_shortcode('left_right_content_with_image', 'left_right_content_with_image');
-
-if (!function_exists('bordered_box_hamrah')) {
-	function bordered_box_hamrah($atts, $content = null) {
-		extract(shortcode_atts(array("background_color"=>"#fff","border_color"=>""), $atts));
-		
-		$flyers = new WP_Query( array('post_type'=>'flyers','numberposts'=>4,'suppress_filters' => false) );
-		
-		
-		$html = '[vc_row_inner]';
-		
-		if($flyers->have_posts()): 
-			while ($flyers->have_posts()): $flyers->the_post();
-				$html .= '[vc_column_inner width="1/4"]';
-				
-					$html .= '<div class="box_holder custom_hamrah" ';
-					if($background_color != "" || $border_color != ""){
-						$html .= 'style="';
-						if($background_color != ""){
-							$html .= 'background-color:'.$background_color.';';
-						}
-						if($border_color != ""){
-							$html .= 'border-color:'.$border_color.';';
-						}
-						$html .= '"';
-					}
-					$html .= '><div class="box_holder_inner center">';
-					$html .= '<h3>'.get_the_title(get_the_ID()).'</h3>';
-					$html .= '<a href="'.post_permalink(icl_object_id(get_option('flyer_page_hamrah'),'page',true,ICL_LANGUAGE_CODE)).'">'.get_the_post_thumbnail(get_the_ID(),'medium',array('class'=>'br_fl_images')).'</a>';
-					$html .= "</div>[button size='medium' type='normal' border_color='#9786bc' color='' background_color='#6c6087' font_style='' text='".__('Download','qode')."' link='".wp_get_attachment_url(get_post_field('flyer', get_the_ID()))."' target='_blank']<span class='separator transparent' style='margin: 12px 0;'></div>";
-				$html .= '[/vc_column_inner]';
-			endwhile;
-		endif;
-		wp_reset_query();
-		
-// 		$brochure = new WP_Query( array('post_type'=>'brochure','numberposts'=>1,'suppress_filters' => false) );
-		
-// 		if($brochure->have_posts()): $brochure->the_post();
-// 			$html .= '<div class="box_holder custom_hamrah" ';
-// 			if($background_color != "" || $border_color != ""){
-// 				$html .= 'style="';
-// 				if($background_color != ""){
-// 					$html .= 'background-color:'.$background_color.';';
-// 				}
-// 				if($border_color != ""){
-// 					$html .= 'border-color:'.$border_color.';';
-// 				}
-// 				$html .= '"';
-// 			}
-// 			$html .= '><div class="box_holder_inner center">';
-// 			$html .= '<h3>'.get_the_title(get_the_ID()).'</h3>';
-// 			$html .= '<a href="'.get_post_permalink(get_the_ID()).'">'.get_the_post_thumbnail(get_the_ID(),'small',array('class'=>'br_fl_images')).'</a>';
-// 			$html .= "</div>[button size='medium' type='normal' border_color='#9786bc' color='' background_color='#6c6087' font_style='' text='".__('Download','qode')."' link='".wp_get_attachment_url(get_post_field('brochure', get_the_ID()))."' target='_blank']<span class='separator transparent' style='margin: 12px 0;'></div>";
-// 		endif;
-		$html .= '[/vc_row_inner]';
-		$html = do_shortcode($html);
-		wp_reset_query();
-		return $html;
-		
-	}
-}
-add_shortcode('bordered_box_hamrah', 'bordered_box_hamrah');
-
-
-
-if (!function_exists('show_code_shortcode')) {
-	function show_code_shortcode($atts, $content = null) {
-		extract(shortcode_atts(array("title"=>'',"background_color"=>"#f8f8f8"), $atts));
-		$html='';
-		$html .= '<div class="box_holder custom_hamrah" ';
-			$html .= 'style="'.$background_color.'"';
-		$html .= '><div class="box_holder_inner center">';
-		$html .= '<h3>'.$title.'</h3>';
-		$html .= $content;
-		$html .= "</div></div>";
-
-		return $html;
-
-}
-}
-add_shortcode('show_code_shortcode', 'show_code_shortcode');
-
-
-//****************** ADDED BY WEBRUN END ************************//

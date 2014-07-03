@@ -1,31 +1,51 @@
 (function() {
-   tinymce.create('tinymce.plugins.qode_shortcodes', {
-      init : function(ed, url) {		 
-		 
-         ed.addButton('qode_shortcodes', {
-            title : 'Qode Shortcodes',
-            image : url+'/qode_shortcodes.ico',
-            onclick : function() {
-						
+	tinymce.create('tinymce.plugins.qode_shortcodes', {
+		init : function(ed, url) {
+
+			ed.addButton('qode_shortcodes', {
+				id : 'qode_shortcode_button',
+				title : 'Qode Shortcodes',
+				image : url+'/qode_shortcodes.ico',
+				onclick : function() {
+
 					jQuery("#qode_shortcode_form_wrapper").remove();
-				
-					
+
 					var shortcodes_visible = jQuery("#qode_shortcodes_menu_holder").length;
-					
+
 					if (shortcodes_visible){
 						jQuery("#qode_shortcodes_menu_holder").remove();
-					}
-					else{
-						
+					} else{
+
+						var container_element = "";
 						var id = jQuery(this).attr("id");
-						jQuery("#"+id+"_toolbargroup").append("<div id='qode_shortcodes_menu_holder'></div>");							
 
-              jQuery('#qode_shortcodes_menu_holder').load(url + '/qode_shortcodes_popup.html#qode_shortodes_popup', function(){
+						if(jQuery('#qode_shortcode_button').length && !jQuery('#wp-wpb_tinymce_content-wrap').length){
+							container_element = jQuery('#qode_shortcode_button').closest(".mce-toolbar-grp");
+						} else if (jQuery("#"+id+"_toolbargroup").length){
+							container_element = jQuery("#"+id+"_toolbargroup");
+						} else if (jQuery('#wp-wpb_tinymce_content-wrap #qode_shortcode_button').length){
+							container_element = jQuery('#wp-wpb_tinymce_content-wrap');
+						}
 
-						var y = parseInt(jQuery("#content_qode_shortcodes").offset().top) - 25;	
-						var x = parseInt(jQuery("#content_qode_shortcodes").offset().left) - parseInt(jQuery("#adminmenuwrap").width()) + 10;
-						y = 0;
-						jQuery("#qode_shortcodes_menu_holder").css({top: y, left: x});
+						if(container_element != ""){
+							container_element.append("<div id='qode_shortcodes_menu_holder'></div>");
+						}
+
+						jQuery('#qode_shortcodes_menu_holder').load(url + '/qode_shortcodes_popup.html#qode_shortodes_popup', function(){
+
+							var y = 0;
+							var x = 0;
+
+							if(jQuery('#qode_shortcode_button button').length && !jQuery('#wp-wpb_tinymce_content-wrap').length){
+								x = parseInt(jQuery("#qode_shortcode_button button").offset().left) - parseInt(jQuery("#adminmenuwrap").width()) + 10;
+							} else if (jQuery("#content_qode_shortcodes").length){
+								x = parseInt(jQuery("#content_qode_shortcodes").offset().left) - parseInt(jQuery("#adminmenuwrap").width()) + 10;
+							} else if (jQuery('#wp-wpb_tinymce_content-wrap').length){
+								y = 70;
+								x = 0;
+							}
+
+							jQuery("#qode_shortcodes_menu_holder").css({top: y, left: x});
 						
 						jQuery("#SC_1-2x1-2").click(function(){
 							var shortcode = "[vc_row][vc_column width='1/2'][/vc_column][vc_column width='1/2'][/vc_column][/vc_row]";
@@ -853,7 +873,7 @@
 							   });							
 							});  
 							jQuery("#qode_shortcodes_menu_holder").remove();                                    
-						})						
+						})
 						
 						jQuery("#SC_bordered_box").click(function(){
 							jQuery("#qode_shortcode_form_wrapper").remove();
@@ -1034,88 +1054,6 @@
 							jQuery("#qode_shortcodes_menu_holder").remove();                                    
 						})
 						
-						
-						//****************** ADDED BY WEBRUN ************************//
-						
-						
-						
-						jQuery("#SC_image_with_text_and_no_icon").click(function(){
-							jQuery("#qode_shortcode_form_wrapper").remove();
-							jQuery.get(url + "/qode_shortcodes_image_with_text_and_no_icon.php", function(data){
-							   var form = jQuery(data);
-							   form.appendTo('body').hide();
-								 colorPicker();
-							   tb_show( 'Image With Text and No Icon Shortcode', '#TB_inline?width=' + W + '&height=' + H + '&inlineId=qode_shortcode_form_wrapper' );
-							   jQuery('#TB_window #qode_insert_shortcode_button').click(function(){
-									var image = jQuery('#TB_window #image').val();
-									var link = jQuery('#TB_window #link').val();
-									var target = jQuery('#TB_window #target option:selected').val();
-									var title = jQuery('#TB_window #title').val();
-									var title_color = jQuery('#TB_window #title_color').val();
-									var shortcode = "[image_with_text_and_icon image='"+image+"' link='"+link+"' target='"+target+"' title='"+title+"' title_color='"+title_color+"']<p>Enter text here</p>[/image_with_text_and_icon]";
-									jQuery("#qode_shortcode_form_wrapper").remove()
-									ed.execCommand('mceInsertContent', false, shortcode);		   										   										   tb_remove();
-									return false;
-							   });							
-							});  
-							jQuery("#qode_shortcodes_menu_holder").remove();                                    
-						})
-//					
-//						jQuery("#SC_farsi_meetings_tabs").click(function(){
-//							jQuery("#qode_shortcode_form_wrapper").remove();
-//							jQuery.get(url + "/qode_shortcodes_farsi_meetings_tabs.php", function(data){
-//							   var form = jQuery(data);
-//							   form.appendTo('body').hide();
-//								 colorPicker();
-//							   tb_show( 'Icon List Item Shortcode', '#TB_inline?width=' + W + '&height=' + H + '&inlineId=qode_shortcode_form_wrapper' );
-//							   jQuery('#TB_window #qode_insert_shortcode_button').click(function(){
-//									var interval = jQuery('#TB_window #interval option:selected').val();
-//									var shortcode = "[hamrah_farsi_meetings_tabs interval='"+interval+"']";
-//									jQuery("#qode_shortcode_form_wrapper").remove()
-//									ed.execCommand('mceInsertContent', false, shortcode);		   										   										   tb_remove();
-//									return false;
-//							   });							
-//							});  
-//							jQuery("#qode_shortcodes_menu_holder").remove();                                    
-//						})
-						
-						
-						jQuery("#SC_hamrah_farsi_meetings_side_slide").click(function(){
-							jQuery("#qode_shortcode_form_wrapper").remove();
-							jQuery.get(url + "/hamrah_farsi_meetings_side_slide.php", function(data){
-							   var form = jQuery(data);
-							   form.appendTo('body').hide();
-								 colorPicker();
-							   tb_show( 'Farsi Meeting side slide', '#TB_inline?width=' + W + '&height=' + H + '&inlineId=qode_shortcode_form_wrapper' );
-							   jQuery('#TB_window #qode_insert_shortcode_button').click(function(){
-									var title = jQuery('#TB_window #flex_slide_title').val();
-									var content = jQuery('#TB_window #flex_slide_content').val();
-									var shortcode = "[/hamrah_farsi_meetings_side_slide flex_slide_title='"+title+"' flex_slide_content='"+content+"']";
-									jQuery("#qode_shortcode_form_wrapper").remove()
-									ed.execCommand('mceInsertContent', false, shortcode);		   										   										   tb_remove();
-									return false;
-							   });							
-							});  
-							jQuery("#qode_shortcodes_menu_holder").remove();                                    
-						})
-						
-						
-						jQuery("#SC_farsi_meetings_tabs").click(function(){
-							var shortcode = "[hamrah_farsi_meetings_tabs interval='0']";
-
-							ed.execCommand('mceInsertContent', false, shortcode);   
-							jQuery("#qode_shortcodes_menu_holder").remove();                          
-						})
-						
-						jQuery("#SC_hamrah_gallery_section").click(function(){
-							var shortcode = "[hamrah_gallery_section interval='0']";
-
-							ed.execCommand('mceInsertContent', false, shortcode);   
-							jQuery("#qode_shortcodes_menu_holder").remove();                          
-						})
-						
-						
-						//****************** ADDED BY WEBRUN END ************************//
 					})	
 				}
             }

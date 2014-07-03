@@ -5,7 +5,7 @@ Description: Subway Theme
 Tags: business, clean, multi-purpose, retina, responsive, wpml, corporate, clean, parallax, shop, woo commerce, modern, interactive, blog, mega menu
 Author: Qode Interactive
 Author URI: http://www.qodeinteractive.com/
-Version: 1.0.4
+Version: 1.1
 License: GNU General Public License
 License URI: licence/GPL.txt
 
@@ -15,6 +15,30 @@ License URI: licence/GPL.txt
 CSS changes can be made in files in the /css/ folder. This is a placeholder file required by WordPress, so do not delete it.
 
 Changelog
+
+1.1
+- Updated Visual Composer to Version 4.1.2 with custom work by Qode
+- Updated LayerSlider to version 5.1.1
+- Updated translation files
+- Updated Sorting of font awesome icons array
+- Fixed WP 3.9 Qode Shortcodes bug
+- Fixed WP 3.9 Qode Options image browser field bug
+- Fixed WooCommerce checkout fields translation
+- Fixed paddings on box shortcode
+
+1.0.5
+- Added WooCommerce 2.1 integration(from this version our theme is compatible only with WC 2.1+)
+- Updated label translation files
+- Fixed responsive footer columns margins
+- Fixed a bug with latest blog shortcode regarding localization of the post dates
+- Fixed some minor bugs with anchor active class
+- Fixed bug with Visual Composer css loading
+- Fixed Google font inclusion bug
+- Fixed blog masonry layout
+- Fixed background color changing for "add to cart button" on single product page
+- Fixed section overlaping separator with icon
+- Fixed 'qode like' functionality on portfolios that are inerted via 'load more' functions
+
 1.0.4
 - Added anchor functionality on parallax sections, custom links (manualy added class needed) and buttons
 - Added video background functionality on sections

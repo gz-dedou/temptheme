@@ -208,6 +208,9 @@ $j(document).ready(function() {
 					.projects_holder article span.text_holder{\
 						background-color: rgba("+hexToRgb(color).r+","+hexToRgb(color).g+","+hexToRgb(color).b+", 0.85); \
 					}\
+					.woocommerce-page .button.single_add_to_cart_button{ \
+						background-color: transparent; \
+					} \
 					a:hover, \
 					p a:hover, \
 					nav.main_menu > ul > li.active > a, \

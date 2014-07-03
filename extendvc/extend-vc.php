@@ -16,13 +16,46 @@ vc_remove_element("vc_wp_archives");
 vc_remove_element("vc_wp_rss");
 vc_remove_element("vc_teaser_grid");
 vc_remove_element("vc_button");
+vc_remove_element("vc_button2");
 vc_remove_element("vc_cta_button");
+vc_remove_element("vc_cta_button2");
 vc_remove_element("vc_message");
 vc_remove_element("vc_tour");
 vc_remove_element("vc_progress_bar");
 vc_remove_element("vc_pie");
+vc_remove_element("vc_images_carousel");
+vc_remove_element("vc_posts_grid");
 vc_remove_element("vc_posts_slider");
 vc_remove_element("vc_toggle");
+vc_remove_element("vc_carousel");
+
+/*** Remove unused parameters ***/
+if (function_exists('vc_remove_param')) {
+	vc_remove_param('vc_column_text', 'css_animation');
+	vc_remove_param('vc_row', 'bg_image');
+	vc_remove_param('vc_row', 'bg_color');
+	vc_remove_param('vc_row', 'font_color');
+	vc_remove_param('vc_row', 'margin_bottom');
+	vc_remove_param('vc_row', 'bg_image_repeat');
+	vc_remove_param('vc_tabs', 'interval');
+	vc_remove_param('vc_accordion', 'active_tab');
+	vc_remove_param('vc_accordion', 'collapsible');
+	vc_remove_param('vc_separator', 'style');
+	vc_remove_param('vc_separator', 'color');
+	vc_remove_param('vc_separator', 'accent_color');
+	vc_remove_param('vc_separator', 'el_width');
+	vc_remove_param('vc_text_separator', 'style');
+	vc_remove_param('vc_text_separator', 'color');
+	vc_remove_param('vc_text_separator', 'accent_color');
+	vc_remove_param('vc_text_separator', 'el_width');
+}
+
+/*** Remove frontend editor ***/
+if(function_exists('vc_disable_frontend')){
+	vc_disable_frontend();
+}
+
+
 $fa_icons = getFontAwesomeIconArray();
 $icons = array();
 $icons[""] = "";
@@ -131,20 +164,26 @@ vc_add_param("vc_row", array(
 	)
 ));
 vc_add_param("vc_row", array(
-	"type" => "checkbox",
+	"type" => "dropdown",
 	"class" => "",
 	"heading" => __("Video background"),
-	"value" => array(__("Use video background?") => "show_video" ),
 	"param_name" => "video",
+	"value" => array(
+		"No" => "",
+		"Yes" => "show_video"
+	),
 	"description" => __(""),
 	"dependency" => Array('element' => "row_type", 'value' => array('section'))
 ));
 vc_add_param("vc_row", array(
-	"type" => "checkbox",
+	"type" => "dropdown",
 	"class" => "",
 	"heading" => __("Video overlay"),
-	"value" => array(__("Use transparent overlay over video?") => "show_video_overlay" ),
 	"param_name" => "video_overlay",
+	"value" => array(
+		"No" => "",
+		"Yes" => "show_video_overlay"
+	),
 	"description" => __(""),
 	"dependency" => Array('element' => "video", 'value' => array('show_video'))
 ));
@@ -1174,8 +1213,6 @@ vc_map( array(
 			)
 		)
 ) );
-
-
 //Message
 vc_map( array(
 		"name" => __("Qode Message"),
@@ -2901,277 +2938,6 @@ vc_map( array(
 			)
 		)
 ) );
-
-
-
-// Custom Font
-vc_map( array(
-"name" => __("Show Shortcode Code"),
-"base" => "show_code_shortcode",
-'admin_enqueue_css' => array(get_template_directory_uri().'/css/admin/vc-extend.css'),
-"icon" => "icon-wpb-custom_font",
-"category" => __('by Webrun'),
-"allowed_container_element" => 'vc_row',
-"params" => array(
-array(
-"type" => "textfield",
-"holder" => "div",
-"class" => "",
-"heading" => __("Title"),
-"param_name" => "title",
-"value" => __("")
-),
-array(
-"type" => "textarea_html",
-"holder" => "div",
-"class" => "",
-"heading" => __("Content"),
-"param_name" => "content",
-"value" => __(""),
-"description" => __("")
-)
-
-)
-) );
-
-//****************** ADDED BY WEBRUN ************************//
-
-// Image with text and no icon
-vc_map( array(
-"name" => __("Image with text and no Icon"),
-"base" => "image_with_text_and_no_icon",
-'admin_enqueue_css' => array(get_template_directory_uri().'/css/admin/vc-extend.css'),
-"icon" => "icon-wpb-image_with_text",
-"category" => __('by Webrun'),
-"allowed_container_element" => 'vc_row',
-"params" => array(
-array(
-"type" => "attach_image",
-"holder" => "div",
-"class" => "",
-"heading" => __("Image"),
-"param_name" => "image"
-		),
-		array(
-		"type" => "textfield",
-		"holder" => "div",
-		"class" => "",
-		"heading" => __("Article Link"),
-		"param_name" => "a_link",
-		"description" => __("Enter Article Url")
-		),
-		array(
-			"type" => "textfield",
-			"holder" => "div",
-			"class" => "",
-			"heading" => __("Book Link"),
-			"param_name" => "b_link",
-			"description" => __("Enter Book Url")
-		),
-		array(
-		"type" => "dropdown",
-		"holder" => "div",
-		"class" => "",
-		"heading" => __("Link Target"),
-		"param_name" => "target",
-		"value" => array(
-		"" => "",
-		"Self" => "_self",
-		"Blank" => "_blank",
-		"Parent" => "_parent"
-				),
-				"description" => __("")
-		),
-		array(
-		"type" => "textfield",
-		"holder" => "div",
-		"class" => "",
-		"heading" => __("Title"),
-		"param_name" => "title",
-		"description" => __("")
-		),
-		array(
-		"type" => "colorpicker",
-		"holder" => "div",
-		"class" => "",
-		"heading" => __("Title Color"),
-		"param_name" => "title_color",
-		"description" => __("")
-		),
-		array(
-		"type" => "textarea_html",
-		"holder" => "div",
-		"class" => "",
-		"heading" => __("Content"),
-		"param_name" => "content",
-		"value" => __("<p>I am test text for Image with text shortcode.</p>"),
-		"description" => __("")
-		)
-)
-) );
-
-
-// Image with text and no icon
-vc_map( array(
-"name" => __("Content with Image left and right"),
-"base" => "left_right_content_with_image",
-'admin_enqueue_css' => array(get_template_directory_uri().'/css/admin/vc-extend.css'),
-"icon" => "icon-wpb-image_with_text",
-"category" => __('by Webrun'),
-"allowed_container_element" => 'vc_row',
-"params" => array(
-array(
-"type" => "attach_image",
-"holder" => "div",
-"class" => "",
-"heading" => __("Image"),
-"param_name" => "image_url"
-		),
-		array(
-		"type" => "textfield",
-		"holder" => "div",
-		"class" => "",
-		"heading" => __("Title"),
-		"param_name" => "title",
-		"description" => __("Enter Title Here")
-		),
-		array(
-		"type" => "textfield",
-		"holder" => "div",
-		"class" => "",
-		"heading" => __("Short Form"),
-		"param_name" => "short_form",
-		"description" => __("Enter Short Form Here")
-		),
-		array(
-		"type" => "dropdown",
-		"holder" => "div",
-		"class" => "",
-		"heading" => __("Direction"),
-		"param_name" => "direction",
-		"value" => array(
-		"Image Left" => "0",
-		"Image Right" => "1"
-				),
-				"description" => __("")
-		),
-// 		array(
-// 		"type" => "textarea_html",
-// 		"holder" => "div",
-// 		"class" => "",
-// 		"heading" => __("Content"),
-// 		"param_name" => "text",
-// 		"value" => __(""),
-// 		"description" => __("")
-// 		),
-		array(
-			"type" => "textarea_html",
-			"holder" => "div",
-			"class" => "",
-			"heading" => __("Content"),
-			"param_name" => "content",
-			"value" => __(""),
-			"description" => __("Enter your content.")
-		)
-)
-) );
-
-
-vc_map( array(
-"name" => __("Farsi Meetings as slide"),
-"base" => "hamrah_farsi_meetings_side_slide",
-'admin_enqueue_css' => array(get_template_directory_uri().'/css/admin/vc-extend.css'),
-"icon" => "icon-wpb-image_with_text",
-"category" => __('by Webrun'),
-"allowed_container_element" => 'vc_row',
-"params" => array(
-	array(
-			"type" => "textfield",
-			"holder" => "div",
-			"class" => "",
-			"heading" => __("Title"),
-			"param_name" => "flex_slide_title",
-			"description" => __("")
-	),
-	array(
-			"type" => "textarea_html",
-			"holder" => "div",
-			"class" => "",
-			"heading" => __("Content"),
-			"param_name" => "flex_slide_content",
-			"value" => __("<p>Please enter some content here</p>"),
-			"description" => __("")
-	)
-)
-) );
-
-vc_map( array(
-"name" => __("Hamrah Gallery as Tabs"),
-"base" => "hamrah_farsi_meetings_tabs",
-'admin_enqueue_css' => array(get_template_directory_uri().'/css/admin/vc-extend.css'),
-"icon" => "icon-wpb-image_with_text",
-"category" => __('by Webrun'),
-"allowed_container_element" => 'vc_row',
-"show_settings_on_create" => false,
-"params" => array(
-	array(
-			"type" => "label",
-			"holder" => "div",
-			"class" => "",
-			"heading" => __("Cannot Edit meeting for now"),
-			"param_name" => "link",
-			"description" => __("")
-	)
-)
-) );
-
-
-vc_map( array(
-"name" => __("Hamrah Gallery Section"),
-"base" => "hamrah_gallery_section",
-'admin_enqueue_css' => array(get_template_directory_uri().'/css/admin/vc-extend.css'),
-"icon" => "icon-wpb-image_with_text",
-"category" => __('by Webrun'),
-"allowed_container_element" => 'vc_row',
-"show_settings_on_create" => false,
-"params" => array(
-		array(
-		"type" => "label",
-		"holder" => "div",
-		"class" => "",
-		"heading" => __("Cannot Edit gallery for now"),
-		"param_name" => "link",
-		"description" => __("")
-		)
-)
-) );
-
-
-vc_map( array(
-"name" => __("Flyer and Brochure"),
-"base" => "bordered_box_hamrah",
-'admin_enqueue_css' => array(get_template_directory_uri().'/css/admin/vc-extend.css'),
-"icon" => "icon-wpb-cover_boxes",
-"category" => __('by Webrun'),
-"allowed_container_element" => 'vc_row',
-"show_settings_on_create" => false,
-"params" => array(
-		array(
-		"type" => "label",
-		"holder" => "div",
-		"class" => "",
-		"heading" => __("Cannot Edit border_box_for_now for now"),
-		"param_name" => "link",
-		"description" => __("")
-		)
-)
-) );
-	
-
-
-//****************** ADDED BY WEBRUN END ************************//
-
-
 
 /***************** Woocommerce Shortcodes *********************/
 

@@ -288,7 +288,7 @@ class Qode_Theme_Options {
 		//if ( $_REQUEST['reset'] ) echo '<div id="message" class="updated fade"><p><strong>'.esc_html__('Settings reset.', 'qode').'</strong></p></div>'; ?>
 		<div id="qode-metaboxes-general" class="wrap">
 		    <div style="float:left; padding:10px 10px 10px 0;"></div>
-		    <h2 style="padding-top:25px;"><?php printf( __('version %1$s', 'qode'), '1.0.4' ); ?></h2>
+		    <h2 style="padding-top:25px;"><?php printf( __('version %1$s', 'qode'), '1.1' ); ?></h2>
 
 		    <form method="post" action="options.php">
 <?php			settings_fields( 'qode_options_subway_page' ); // Checks that the user can update options and also redirect the user back to the correct admin page (this form).

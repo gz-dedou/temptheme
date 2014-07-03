@@ -9,7 +9,7 @@ if ( !class_exists('myCustomFields') ) {
 		/**
 		* @var  array  $postTypes  An array of public custom post types, plus the standard "post" and "page" - add the custom types you want to include here
 		*/
-		var $postTypes = array( "page", "post", "portfolio_page", "testimonials", "meetings", "ebooks", "hamrah_gallery","pages" );
+		var $postTypes = array( "page", "post", "portfolio_page", "testimonials" );
 		/**
 		* @var  array  $customFields  Defines the custom fields available
 		*/
@@ -43,7 +43,7 @@ if ( !class_exists('myCustomFields') ) {
 				"title"			=> "Title Color",
 				"description"	=> "",
 				"type"			=> "colorpicker",
-				"scope"			=>	array("page","post","portfolio_page", "meetings", "ebooks", "hamrah_gallery","pages"),
+				"scope"			=>	array("page","post","portfolio_page"),
 				"capability"	=> "manage_options"
 			),
 			array(
@@ -51,7 +51,7 @@ if ( !class_exists('myCustomFields') ) {
 				"title"			=> "Breadcrumb Color",
 				"description"	=> "",
 				"type"			=> "colorpicker",
-				"scope"			=>	array("page","post","portfolio_page", "meetings", "ebooks", "hamrah_gallery","pages"),
+				"scope"			=>	array("page","post","portfolio_page"),
 				"capability"	=> "manage_options"
 			),
 			array(
@@ -59,7 +59,7 @@ if ( !class_exists('myCustomFields') ) {
 				"title"			=> "Title Background Color",
 				"description"	=> "",
 				"type"			=> "colorpicker",
-				"scope"			=>	array("page","post","portfolio_page", "meetings", "ebooks", "hamrah_gallery","pages"),
+				"scope"			=>	array("page","post","portfolio_page"),
 				"capability"	=> "manage_options"
 			),
 			array(
@@ -67,7 +67,7 @@ if ( !class_exists('myCustomFields') ) {
 				"title"			=> "Don't show page title image",
 				"description"	=> "",
 				"type"			=> "checkbox",
-				"scope"			=>	array("page","post","portfolio_page", "meetings", "ebooks", "hamrah_gallery","pages"),
+				"scope"			=>	array("page","post","portfolio_page"),
 				"capability"	=> "manage_options"
 			),
 			array(
@@ -75,7 +75,7 @@ if ( !class_exists('myCustomFields') ) {
 				"title"			=> "Responsive title image",
 				"description"	=> "",
 				"type"			=> "selectbox-responsive-title-image",
-				"scope"			=>	array("page","post","portfolio_page", "meetings", "ebooks", "hamrah_gallery","pages"),
+				"scope"			=>	array("page","post","portfolio_page"),
 				"capability"	=> "manage_options"
 			),
 			array(
@@ -91,7 +91,7 @@ if ( !class_exists('myCustomFields') ) {
 				"title"			=> "Title image",
 				"description"	=> "",
 				"type"			=> "image-title-image",
-				"scope"			=>	array("page","post","portfolio_page", "meetings", "ebooks", "hamrah_gallery","pages"),
+				"scope"			=>	array("page","post","portfolio_page"),
 				"capability"	=> "manage_options"
 			),
 			array(
@@ -143,14 +143,6 @@ if ( !class_exists('myCustomFields') ) {
 				"capability"	=> "manage_options"
 			),
 			array(
-				"name"			=> "choose-blog-post_type",
-				"title"			=> "Choose blog posttype",
-				"description"	=> "",
-				"type"			=> "selectbox-post-type",
-				"scope"			=>	array("page"),
-				"capability"	=> "manage_options"
-			),
-			array(
 				"name"			=> "show-posts-per-page",
 				"title"			=> "Posts per page",
 				"description"	=> "",
@@ -187,7 +179,7 @@ if ( !class_exists('myCustomFields') ) {
 				"title"			=> "Enter layer slider shortcode",
 				"description"	=> "",
 				"type"			=> "text",
-				"scope"			=>	array("page","post","portfolio_page", "meetings", "ebooks", "hamrah_gallery","pages"),
+				"scope"			=>	array("page","post","portfolio_page"),
 				"capability"	=> "manage_options"
 			),
 			array(
@@ -240,7 +232,6 @@ if ( !class_exists('myCustomFields') ) {
 					add_meta_box( 'my-custom-fields', 'Qode Custom Fields', array( &$this, 'displayCustomFields' ), $postType, 'normal', 'high' );
 					if($postType != "testimonials") {
 						add_meta_box( 'my-custom-portfolio', 'Qode Portfolio', array( &$this, 'displayCustomPortfolio' ), 'portfolio_page', 'normal', 'high' );
-						//add_meta_box( 'my-custom-portfolio', 'Qode Portfolio', array( &$this, 'displayCustomPortfolio' ), 'hamrah_gallery', 'normal', 'high' );
 						add_meta_box( 'my-custom-seo', 'Qode SEO Fields', array( &$this, 'displayCustomSeo' ), $postType, 'normal', 'high' );
 					}
 				}
@@ -343,18 +334,6 @@ if ( !class_exists('myCustomFields') ) {
 											endforeach;
 										echo '</select>';
 									
-									break;
-								}
-								case "selectbox-post-type": {
-									$of_post_types = get_post_types( '', 'names' );
-									echo '<label for="' . $this->prefix . $customField[ 'name' ] .'" style="display:inline;"><b>' . $customField[ 'title' ] . '</b></label>&nbsp;&nbsp;';
-									echo '<select name="' . $this->prefix . $customField[ 'name' ] . '" id="' . $this->prefix . $customField[ 'name' ] . '" class="select">';
-									echo '<option value=""></option>';
-									foreach ($of_post_types as $pt):
-										echo '<option value="'.$pt.'" '.(get_post_meta( $post->ID, $this->prefix . $customField[ 'name' ], true ) == $pt?'selected':'').'>'.ucfirst($pt).'</option>';
-									endforeach;
-									echo '</select>';
-										
 									break;
 								}
 								case "selectbox-portfolio-single": {
